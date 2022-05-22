@@ -1,0 +1,343 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
+*{
+    font-size: 1rem;    
+    font-family: "Poppins", sans-serif;
+    
+}
+.td{
+    border:  1px solid;
+    margin: 0px;
+    padding: 15px;
+    cursor: grab;
+    position: relative;
+}
+.td-selected
+{
+  background: linear-gradient(90deg, #3F2B96 0%, #A8C0FF 100%);
+}
+.td-start
+{
+  background-color: #0672d0  ;
+}
+.td-end
+{
+  background-color: #FF4136;
+}
+.td-status-0{
+  position: relative;
+}
+.td-status-0::before{
+
+  content: '';
+  position: absolute;
+  top: 0%;
+  bottom: 0%;
+  left: 0%;
+  right: 0%;
+  animation-name: visitedAnimation;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-out;
+  animation-delay: 0;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+.td-optimal{
+  position: relative;
+}
+.td-optimal::before{
+  content: '';
+  position: absolute;
+  top: 0%;
+  bottom: 0%;
+  left: 0%;
+  right: 0%;
+  
+  /* background-color: #89d8d3;
+background-color: #faff00;
+background-image: linear-gradient(319deg, #faff00 0%, #ff1000 37%, #ff6a00 100%);
+ */
+/* Created with https://www.css-gradient.com */
+background-color: rgba(255, 255, 0, 0.759);
+  animation-name: optimalAnimation;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+.td-weight{
+  background-color: blueviolet;
+}
+/* wall css */
+.td-status-1{
+  position: relative;
+}
+.td-status-1::before{
+  content: '';
+  position: absolute;
+  top: 0%;
+  bottom: 0%;
+  left: 0%;
+  right: 0%;
+  background-color: #485461;
+  background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
+  animation-name: optimalAnimation;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+/* wall without animation */
+.td-status-2{
+  background-color: #485461;
+  background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
+}
+/* reverse wall animation */
+.td-status-3{
+  position: relative;
+  background-color: #485461;
+  background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
+}
+.td-status-3::before{
+  content: '';
+  position: absolute;
+  top: 0%;
+  bottom: 0px;
+  left: 0%;
+  right: 0%;
+  background-color: white;
+  animation-name: optimalAnimation;
+  animation-duration: 1s;
+  animation-timing-function: ease-out;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+
+.td-status-4{
+  background-color: plum;
+}
+.td-status-0-no-animation{
+  background-color: #40e0d0;
+}
+.td-optimal-no-animation{
+  background-color: #89d8d3;
+  /* background-color: #faff00;
+background-image: linear-gradient(319deg, #faff00 0%, #ff1000 37%, #ff6a00 100%);
+ */
+  /* Created with https://www.css-gradient.com */
+  background-color: rgba(255, 255, 0, 0.759);
+}
+.td-weight-status-0{
+  position: relative;
+}
+.td-weight-status-0::before{
+  content: '';
+  position: absolute;
+  top: 0%;
+  bottom: 0px;
+  left: 0%;
+  right: 0%;
+  background-color: #a0f597;
+  animation-name: optimalAnimation;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+.td-weight-status-1{
+  position: relative;
+}
+.td-weight-status-1::before{
+  content: '';
+  position: absolute;
+  top: 0%;
+  bottom: 0px;
+  left: 0%;
+  right: 0%;
+  background-color: #54c15e;
+animation-name: optimalAnimation;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+.td-weight-status-2{
+  position: relative;
+  }
+.td-weight-status-2::before{
+  content: '';
+  position: absolute;
+  top: 0%;
+  bottom: 0px;
+  left: 0%;
+  right: 0%;
+ background-color: #54ba5e;
+ animation-name: optimalAnimation;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+.td-weight-status-3{
+  position: relative;
+}
+.td-weight-status-3::before{
+  content: '';
+  position: absolute;
+  top: 0%;
+  bottom: 0px;
+  left: 0%;
+  right: 0%;
+background-color: #227249;
+  animation-name: optimalAnimation;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out;
+  animation-direction: alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+}
+.td-weight-status-4{
+  position: relative;
+}
+.td-weight-status-4::before{
+  content: '';
+  position: absolute;
+  top: 0%;
+  bottom: 0px;
+  left: 0%;
+  right: 0%;
+  background: #B993D6;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #8CA6DB, #B993D6);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #8CA6DB, #B993D6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.td-weight-status-5{
+  position: relative;
+}
+.td-weight-status-5::before{
+  content: '';
+  position: absolute;
+  top: 0%;
+  bottom: 0px;
+  left: 0%;
+  right: 0%;
+  background: #9D50BB;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #6E48AA, #9D50BB);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #6E48AA, #9D50BB); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.td-weight-status-6{
+  position: relative;
+  }
+.td-weight-status-6::before{
+  content: '';
+  position: absolute;
+  top: 0%;
+  bottom: 0px;
+  left: 0%;
+  right: 0%;
+  background: #da22ff98;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #9733EE, #DA22FF);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #9733EE, #DA22FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.td-weight-status-7{
+  position: relative;
+}
+.td-weight-status-7::before{
+  content: '';
+  position: absolute;
+  top: 0%;
+  bottom: 0px;
+  left: 0%;
+  right: 0%;
+  background: #AA076B;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #61045F, #AA076B);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #61045F, #AA076B); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.td-no-wall{
+  position: relative;
+  background-color: #485461;
+  background-image: linear-gradient(315deg, #485461 0%, #28313b 74%);
+}
+.slidecontainer {
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none;
+  /* width: 100%; */
+  height: 25px;
+  background: violet;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: blue;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: blue;
+  cursor: pointer;
+}
+
+@keyframes visitedAnimation {
+    0% {
+      transform: scale(.3);
+      background-color:#FF2400 ;
+      border-radius: 100%;
+    }
+  
+    50% {
+      background-color: #F28500;
+    }
+  
+    75% {
+      transform: scale(1.1);
+      background-color: #2F2ABF
+    }
+  
+    100% {
+      transform: scale(1.0);
+      background-color: #40e0d0;
+    }
+  }
+  @keyframes optimalAnimation {
+    0% {
+      transform: scale(.3);
+      border-radius: 100%;
+    }
+    75% {
+      transform: scale(1.1);
+      }
+  
+    100% {
+      transform: scale(1.0);
+   }
+  }
