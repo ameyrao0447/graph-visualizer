@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#" ><b style="font-size: 1.5rem;">Graph Visualizer</b></a>
+    <a class="navbar-brand" href="#"><b style="font-size: 1.7rem;">Graph Visualizer</b></a>
     <button class="btn btn-outline-primary" class="navbar-toggler" type="button" data-bs-toggle="collapse"
       data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
       aria-label="Toggle navigation">
@@ -9,7 +9,8 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <select [(ngModel)]="algo" (ngModelChange)="setAlgorithm($event)" class="form-select" aria-placeholder="Select a Algorithm" style="width: 8.5rem;">
+          <select [(ngModel)]="algo" (ngModelChange)="setAlgorithm($event)" class="form-select"
+            aria-placeholder="Select a Algorithm" style="width: 8.5rem;">
             <option disabled [value]="undefined" hidden>Algorithm</option>
             <option *ngFor="let option of options" [value]="option">{{option}}</option>
           </select>
@@ -20,7 +21,8 @@
         </li>
         &nbsp;&nbsp;
         <li class="nav-item dropdown">
-          <select [(ngModel)]="selectedRDOrientation" class="form-select" aria-label="Select a Maze" style="width: 8.5rem;">
+          <select [(ngModel)]="selectedRDOrientation" class="form-select" aria-label="Select a Maze"
+            style="width: 8.5rem;">
             <option disabled [value]="undefined" hidden>Maze</option>
             <option *ngFor="let option of mazeoptions" [value]="option">{{option}}</option>
           </select>
@@ -31,23 +33,38 @@
         </li>
         &nbsp;&nbsp;
         <li class="nav-item">
-          <button class="btn btn-outline-primary" type="button" (click)="clear()">clear</button>
+          <div class="btn-group">
+            <button class="btn btn-outline-primary" type="button"  data-bs-toggle="dropdown">Play With Camera</button>
+            <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1"
+              data-bs-toggle="dropdown" aria-expanded="false">
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><button class="dropdown-item" type="button" (click)="playCamera('Generate Weight With Camera')">Weight With Camera</button></li>
+              <li><button class="dropdown-item" type="button" (click)="playCamera('Generate Maze With Camera')">Maze With Camera</button></li>
+            </ul>
+          </div>
         </li>
         &nbsp;&nbsp;
         <li class="nav-item">
-          <button class="btn btn-outline-primary" type="button" (click)="clearPaths()">clear Paths</button>
-        </li>
-        &nbsp;&nbsp;
-        <li class="nav-item">
-          <button class="btn btn-outline-primary" type="button" (click)="clearWallNWeight()">clear Weight &
-            Wall</button>
+          <div class="btn-group">
+            <button class="btn btn-outline-primary" type="button" (click)="clear()">Clear</button>
+            <button class="btn btn-outline-primary dropdown-toggle" type="button" id="dropdownMenuButton1"
+              data-bs-toggle="dropdown" aria-expanded="false">
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><button class="dropdown-item" type="button" (click)="clearWallNWeight()">clear Weight &
+                  Wall</button></li>
+              <li><button class="dropdown-item" type="button" (click)="clearPaths()">clear Paths</button></li>
+            </ul>
+          </div>
         </li>
         &nbsp;&nbsp;
         <li class="nav-item dropdown">
-          <span>Speed: </span> <select style="display: inline; width: 8.5rem;" [(ngModel)]="animationSpeed" class="form-select">
-            <option [value]="15">Fast</option>
-            <option [value]="30">Medium</option>
-            <option [value]="50">Slow</option>
+          <span>Speed: </span> <select style="display: inline; width: 8.5rem;" [(ngModel)]="animationSpeed"
+            class="form-select">
+            <option [value]="5">Fast</option>
+            <option [value]="15">Medium</option>
+            <option [value]="30">Slow</option>
           </select>
         </li>
         <!-- <li class="nav-item">
@@ -64,7 +81,7 @@
     </div>
   </div>
 </nav>
-<div>
+<div [class]="flashFlag===true?'flashit':''">
   <!-- <div>
     <button class="btn btn-outline-primary" type="button" (click)="clear()">clear</button>
         <button class="btn btn-outline-primary" type="button" (click)="startMaze()">Generate Maze</button>
@@ -77,11 +94,11 @@
         <select [(ngModel)]="selectedRDOrientation">
           <option *ngFor="let option of mazeoptions" [value]="option">{{option}}</option>
         </select>
-    <input type='file' accept='image/*' *ngIf="imageFlag" (change)='openFile($event)'><br>
-    <input class="slider" *ngIf="cameraFlag" id="myRange" type="range" min="0" max="255" [(ngModel)]="treshold" />
-  </div> -->
+      </div> -->
+  <!-- <input type='file' accept='image/*' *ngIf="imageFlag" (change)='openFile($event)'><br>
+      <input class="slider" *ngIf="cameraFlag" id="myRange" type="range" min="0" max="255" [(ngModel)]="treshold" /> -->
   <div class="container" style="width: 80%;margin-top: 10px;">
-    <div class="row" >
+    <div class="row">
       <div class="col-md-auto">
         <div class="row">
           <div class="col-md-auto" style="padding: 0px;margin: auto;">Start Node:</div>
@@ -162,17 +179,25 @@
           </div>
         </div>
       </div>
+      &nbsp; &nbsp;&nbsp;&nbsp;
+      <div class="col-md" style="float: right;">
+        <div class="tut"><button  pButton type="button" pTooltip="Tutorial" (click)="showDialog()" icon="pi pi-info-circle" label="" class="p-button-rounded"></button></div>  
+      </div>
     </div>
+    
   </div>
+  
   <div class="container">
     <div class="row" style="text-align: center;margin-top: 15px;margin-bottom: 5px;">
       <div class="col"><b>{{algo}}</b>{{algoDesc}}</div>
     </div>
   </div>
+
+
   <table style="margin: auto;">
     <tr *ngFor="let x of [].constructor(rows);let i=index">
       <td *ngFor="let y of [].constructor(cols);let j=index"
-        [class]="gridData[i][j].status==1?'td td-status-1':gridData[i][j].status==2?'td td-status-2': gridData[i][j].optimalNode && hasAnimated===false?'td-optimal td': gridData[i][j].optimalNode && hasAnimated===true?'td-optimal-no-animation td':gridData[i][j].wall?'td-wall td':gridData[i][j].startNodeFlag?'td td-start':gridData[i][j].endNodeFlag?'td td-end':gridData[i][j].weightStatus==0?'td td-weight-status-0':gridData[i][j].weightStatus==1?'td td-weight-status-1':gridData[i][j].weightStatus==2?'td td-weight-status-2':gridData[i][j].weightStatus==3?'td td-weight-status-3':gridData[i][j].weightStatus==4?'td td-weight-status-4':gridData[i][j].weightStatus==5?'td td-weight-status-5':gridData[i][j].weightStatus==6?'td td-weight-status-6':gridData[i][j].weightStatus==7?'td td-weight-status-7':gridData[i][j].status==4?'td td-status-4':gridData[i][j].status==0 && hasAnimated===false?'td td-status-0':gridData[i][j].status==0 && hasAnimated===true?'td td-status-0-no-animation':'td'"
+        [class]="gridData[i][j].startNodeFlag?'td td-start':gridData[i][j].endNodeFlag?'td td-end':gridData[i][j].status==1?'td td-status-1':gridData[i][j].status==2?'td td-status-2': gridData[i][j].optimalNode && hasAnimated===false?'td-optimal td': gridData[i][j].optimalNode && hasAnimated===true?'td-optimal-no-animation td':gridData[i][j].wall?'td-wall td':gridData[i][j].weightStatus==0 && gridData[i][j].status==0?'td td-weight-status-0 op':gridData[i][j].weightStatus==0?'td td-weight-status-0':gridData[i][j].weightStatus==1 && gridData[i][j].status==0?'td td-weight-status-1 op':gridData[i][j].weightStatus==1?'td td-weight-status-1':gridData[i][j].weightStatus==2&& gridData[i][j].status==0?'td td-weight-status-2 op':gridData[i][j].weightStatus==2?'td td-weight-status-2':gridData[i][j].weightStatus==3 && gridData[i][j].status==0?'td td-weight-status-3 op':gridData[i][j].weightStatus==3?'td td-weight-status-3':gridData[i][j].weightStatus==4&& gridData[i][j].status==0?'td td-weight-status-4 op':gridData[i][j].weightStatus==4?'td td-weight-status-4':gridData[i][j].weightStatus==5&& gridData[i][j].status==0?'td td-weight-status-5 op':gridData[i][j].weightStatus==5?'td td-weight-status-5':gridData[i][j].weightStatus==6 && gridData[i][j].status==0?'td td-weight-status-6 op':gridData[i][j].weightStatus==6?'td td-weight-status-6':gridData[i][j].weightStatus==7&& gridData[i][j].status==0?'td td-weight-status-7 op':gridData[i][j].weightStatus==7?'td td-weight-status-7':gridData[i][j].status==4?'td td-status-4':gridData[i][j].status==0 && hasAnimated===false?'td td-status-0':gridData[i][j].status==0 && hasAnimated===true?'td td-status-0-no-animation':'td'"
         (mousedown)="setClickedTrue(gridData[i][j])" (mouseup)="setClickedFalse(gridData[i][j])"
         (mousemove)="onSelectMoved(gridData[i][j])" (click)="onSelectClicked(gridData[i][j])">
 
@@ -185,8 +210,32 @@
       </td>
     </tr>
   </table>
+  <div class="box stack-top" *ngIf="cameraFlag">
+    <div>
+      <video style=" width: 200px;
+  height: 150px;" id="video" autoplay></video>
+ 
+  </div>
+    <canvas id="video-canvas" width="320" height="240" hidden></canvas>
+    <div >
+      <input type="range" style="width: 60%; height: auto; border-radius: 50%;" id="customRange1" min="0" max="255" [(ngModel)]="treshold">
+      <!-- <input class="slider" style="height: auto; width: 10%;display: block;" *ngIf="cameraFlag" id="myRange" type="range" min="0" max="255" [(ngModel)]="treshold" /> -->
+      &nbsp;
+      &nbsp;&nbsp;&nbsp;
+      <button class="btn btn-warning" (click)="stopVideo()" >
+        <i class="fa-solid fa-camera" style="font-size: 1.2rem;"></i>
+      </button>     
+    </div>
+  </div>
 
-  <video id="video" width="320" height="240" autoplay hidden></video>
-  <canvas id="video-canvas" width="320" height="240" hidden></canvas>
-
+  <p-dialog  [(visible)]="display" [modal]="true" [style]="{width: '50vw','text-align':'center'}" [baseZIndex]="10000"
+  [draggable]="false" [resizable]="false">
+  <ng-template pTemplate="header">
+    <div style="text-align: center; width: 100%;">
+      <span style="padding-right: 5px; float: left; height: auto;">{{(page+1)}}/5</span>
+      <span style="font-size: 1.55rem;">{{selectedTitles}}</span>
+    </div>
+</ng-template>  
+  <app-tutorial [page]="page" (setTitle)="setTitle($event)" (closeEvent)="closeTutorial()"></app-tutorial>
+</p-dialog>
 </div>

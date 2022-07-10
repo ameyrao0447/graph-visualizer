@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import * as _ from 'lodash';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  rows = Math.round(((window.outerHeight-270)/31));
-  cols = Math.round(((window.outerWidth-50)/31));
+  rows = Math.round(((window.outerHeight-270)/25));
+  cols = Math.round(((window.outerWidth-50)/25));
   gridData: any[] = new Array(this.rows);
   clicked = false;
   selectedCnt = 0;
@@ -40,9 +39,19 @@ export class AppComponent implements OnInit {
   mazeFlag:boolean;
   imageFlag=false;
   cameraFlag=false;
-  animationSpeed=30;
+  animationSpeed=15;
   algoDesc="Pick A Algorithm!";
   algoToDescMap=new Map<string,string>();
+  videoObj :HTMLVideoElement ;
+  videoInterval:any;
+  videoStream: MediaStream;
+  flashFlag: boolean;
+  display = false;
+  titles=['Welcome to Graph Visualizer!','Capture using Device Camera','Select algorithm','Generate a maze','Have fun!'];
+  selectedTitles =this.titles[0];
+  page=0;
+  constructor(private cd:ChangeDetectorRef){
+  }
   ngOnInit(): void {
     this.algoToDescMap.set('Jump Point Search'," is an unweighed algorithm,which is an optimization to the A* search");
     this.algoToDescMap.set('A* Search'," is weighted and guarantees the shortest path!");
@@ -51,6 +60,10 @@ export class AppComponent implements OnInit {
     this.algoToDescMap.set('Breadth First Search'," is unweighted and guarantees the shortest path!");
     this.algoToDescMap.set('Dijkstra'," is weighted and guarantees the shortest path!");
     this.generateGrid();
+    if(sessionStorage.getItem("tutorialFlag")===null){
+      this.display=true;
+      sessionStorage.setItem("tutorialFlag","true");
+    }
   }
   generateGrid() {
     for (let i = 0; i < this.rows; i++) {
@@ -159,14 +172,6 @@ export class AppComponent implements OnInit {
       case 'Recursive Backtrack':
         this.animateResult = this.recursiveBack(this.gridData);
       break;
-      case 'Generate Maze With Camera':
-        this.mazeFlag=true;
-        this.cameraFlag=true;
-        break;
-      case 'Generate Weight With Camera':
-        this.mazeFlag=false;
-        this.cameraFlag=true;
-        break;
       case 'Generate Weight With Image':
         this.imageFlag=true;
         break;
@@ -177,10 +182,7 @@ export class AppComponent implements OnInit {
     this.index = 0;
     this.animateInterval = setInterval(() => {
       this.animateWallAndWeight()
-    }, 20);}
-    else{
-      this.video();
-    }
+    }, 10);}
   }
   animateGrid() {
     if (this.index >= this.animateResult.length - 1) {
@@ -197,7 +199,7 @@ export class AppComponent implements OnInit {
     this.index=0;
     this.animateInterval = setInterval(() => {
       this.animateWallAndWeight()
-    }, 20);
+    }, 5);
   }
   callBestRouteAnimation() {
     this.animateResult = _.cloneDeep(this.bestresult);
@@ -1649,18 +1651,19 @@ hasGetUserMedia() {
 }
 video(){
 this.videoFlag=true;
-const video:HTMLVideoElement = document.querySelector('#video');
+this.videoObj= document.querySelector('#video');
 const videoCanvas:HTMLCanvasElement = document.querySelector('#video-canvas');
 let videoCtx = videoCanvas.getContext("2d");
 navigator.mediaDevices.getUserMedia({
   video: true, 
   audio:false
 }).then( stream => {
-  video.srcObject = stream;
-  video.play();
-  video.onplaying=(()=>{
-    setInterval(() => {
-      this.readImageData(video,this.cols,this.rows);
+  this.videoObj.srcObject = stream;
+ this.videoStream = stream;
+  this.videoObj.play();
+  this.videoObj.onplaying=(()=>{
+   this.videoInterval= setInterval(() => {
+      this.readImageData(this.videoObj,this.cols,this.rows);
     }, 50);
     // setTimeout(() => { ;}, 50);
   })
@@ -1672,7 +1675,6 @@ navigator.mediaDevices.getUserMedia({
 // function draw(video,videoCtx,videoCanvas){
 //   videoCtx.drawImage(video, 0, 0, videoCanvas.width, videoCanvas.height); 
 // }
-setTimeout(() => { console.log("fuck u"); }, 50);
 }
 draw(video,videoCtx,videoCanvas){
     videoCtx.drawImage(video, 0, 0, videoCanvas.width, videoCanvas.height); 
@@ -1681,6 +1683,46 @@ draw(video,videoCtx,videoCanvas){
 setAlgorithm(event){
   this.algoDesc=this.algoToDescMap.get(event);
 }  
+stopVideo(){
+  this.flashFlag=true;
+  this.videoObj.pause();
+  this.videoObj.onplaying=(()=>{});
+  clearInterval(this.videoInterval);
+  this.videoStream.getTracks().forEach(function(track) {
+    if (track.readyState == 'live' && track.kind === 'video') {
+        track.stop();
+    }
+});
+this.cameraFlag=false;
+setTimeout(()=>this.flashFlag=false,500);
+}
+playCamera(type){
+  this.nodesToAnimate = [];
+  switch(type){
+  case 'Generate Maze With Camera':
+        this.mazeFlag=true;
+        this.cameraFlag=true;
+        break;
+  case 'Generate Weight With Camera':
+        this.mazeFlag=false;
+        this.cameraFlag=true;
+        break;
+  }
+  this.cd.detectChanges();
+    this.video();
+}
+showDialog() {
+    this.display = true;
+}
+setTitle(idx){
+  this.page=idx;
+  this.selectedTitles=this.titles[idx]
+}
+closeTutorial(){
+  this.display=false;
+  this.cd.detectChanges();
+  this.selectedTitles=this.titles[0];
+}
 }
 interface Node {
   name: string,

@@ -1,0 +1,53 @@
+<div>
+    <div *ngIf="page==0">
+        <div style="font-size: 1.2rem;">This is a 3D visualizer for multiple pathfinding algorithms.
+            A pathfinding algorithm seeks to find the shortest path between two points.
+        </div>
+        <div style="text-align: center;"><img src="./assets/images/route-page1.svg" width="200px" height="200px"></div>
+        <div>All of the algorithms on this web-app are adapted for a 2D grid, where 90 degree turns have a cost of 1 and
+            movements from a node to another have a cost of 1.</div>
+    </div>
+    <div *ngIf="page==1">
+        <div style="text-align: center;">
+            Play with camera, click on the camera icon to get the feed from your camera.
+        </div>
+        <div style="text-align: center;">
+            <img style="margin-right: 10px; " src="./assets/images/cam-1.jpg" width="200px" height="200px">
+            <img style="margin-right: 10px; " src="./assets/images/cam-2.jpg" width="200px" height="200px">
+            <img style="" src="./assets/images/cam-3.jpg" width="200px" height="200px">
+            <div style="padding-top: 10px;">You can preview in the bottom left corner and also set the brightness threshold level.</div>
+            <div></div>
+            <div style="font-size: 0.75rem;padding-top: 10px;">*Note : dark pixels = More weight/walls. light pixels=Less weight/no walls</div>
+        </div>
+    </div>
+        <div *ngIf="page==2">
+            <div style="text-align: center;">
+                Select an algorithm from the top-left dropdown and click the Visualize button to, you know, visualize
+                it.
+            </div>
+            <div style="text-align: center;"><img src="./assets/images/algo-1.jpg" width="170px" height="170px"></div>
+            <div style="text-align: center;">You can change the speed from the right-most dropdown.</div>
+            <div style="text-align: center;"><img src="./assets/images/algo-2.jpg" width="170px" height="170px"></div>
+        </div>
+        <div *ngIf="page==3">
+            <div style="text-align: center;">
+                Feeling lazy to add walls yourself ? Select an algorithm from the Maze Algorithms dropdown to generate a
+                maze.
+            </div>
+            <div style="text-align: center;">
+                <img style="margin-right: 10px;" src="./assets/images/maze-1.jpg" width="220px" height="195px">
+                <img src="./assets/images/maze-2.jpg" width="220px" height="220px">
+            </div>
+        </div>
+        <div *ngIf="page==4">
+            <div style="text-align: center;"><img src="./assets/images/last.png" width="300px" height="200px">
+            </div>
+            <div style="text-align: center;">You can view the source code for this project on GitHub</div>
+        </div>
+        <div style=" padding-top: 10px;text-align: right;">
+            <button style="float: left;" pButton type="button" (click)="close()" label="Skip"></button>
+            <button *ngIf="page>0" pButton type="button" (click)="prev()" label="Previous"></button>
+            &nbsp;&nbsp;&nbsp;
+            <button pButton type="button" (click)="next()" [label]="page<4?'Next':'Finish'"></button>
+        </div>
+    </div>
